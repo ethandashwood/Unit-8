@@ -47,15 +47,19 @@ public class Walking : MonoBehaviour
 
         if (Input.GetKey("w"))
         {
-            float jvol = 8.0f;
+            float jvol = 5.0f;
             rb.velocity = Vector2.up * jvol;
+            anim.SetBool("isjump", true);
+            anim.SetBool("iswalking", false);
+            anim.SetBool("isidle", false);
         }
 
-        if (!Input.anyKey)
-        {
-            anim.SetBool("idle", true);
-            anim.SetBool("isWalking", false);
 
+
+        if (xSpeed == 0.0f)
+        {
+            anim.SetBool("isidle", true);
+            anim.SetBool("iswalking", false);
         }
 
     }
