@@ -22,7 +22,7 @@ public class Walking : MonoBehaviour
     {
         float xSpeed = 0.0f;
 
-
+        float jvol = 0.0f;
         if (Input.GetKey("d"))
         {
 
@@ -47,7 +47,7 @@ public class Walking : MonoBehaviour
 
         if (Input.GetKey("w"))
         {
-            float jvol = 5.0f;
+            jvol = 7.0f;
             rb.velocity = Vector2.up * jvol;
             anim.SetBool("isjump", true);
             anim.SetBool("iswalking", false);
@@ -56,10 +56,24 @@ public class Walking : MonoBehaviour
 
 
 
-        if (xSpeed == 0.0f)
+        if (xSpeed == 0.0f && jvol == 0.0)
         {
             anim.SetBool("isidle", true);
             anim.SetBool("iswalking", false);
+        }
+
+        if (jvol == 0.0 )
+        {
+            anim.SetBool("isjump", false);
+
+        }
+
+        if (jvol > 0.1)
+        {
+            anim.SetBool("iswalking", false);
+            anim.SetBool("isjump", true);
+            anim.SetBool("isidle",false);
+
         }
 
     }
