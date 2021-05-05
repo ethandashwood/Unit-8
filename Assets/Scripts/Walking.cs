@@ -6,13 +6,14 @@ public class Walking : MonoBehaviour
 {
     Rigidbody2D rb;
     public Animator anim;
+    private BoxCollider2D boxCollider2d;
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+        BoxCollider2d = GetComponent<Rigidbody2D>();
     }
 
 
@@ -22,7 +23,9 @@ public class Walking : MonoBehaviour
     {
         float xSpeed = 0.0f;
 
+
         float jvol = 0.0f;
+
         if (Input.GetKey("d"))
         {
 
@@ -42,10 +45,10 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
 
-            
+
         }
 
-        if (Input.GetKey("w"))
+        if (isground() && Input.GetKey("w"))
         {
             jvol = 7.0f;
             rb.velocity = Vector2.up * jvol;
@@ -62,7 +65,7 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", false);
         }
 
-        if (jvol == 0.0 )
+        if (jvol == 0.0)
         {
             anim.SetBool("isjump", false);
 
@@ -72,9 +75,18 @@ public class Walking : MonoBehaviour
         {
             anim.SetBool("iswalking", false);
             anim.SetBool("isjump", true);
-            anim.SetBool("isidle",false);
+            anim.SetBool("isidle", false);
 
         }
 
+        private bool isground()
+        {
+
+        RaycastHit2d raycastHit2d = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, 0.1f);
+        Debug.Log(raycastHit2d.collider);
+        return raycastHit2d.collider != null;
+
+        }
     }
+
 }
