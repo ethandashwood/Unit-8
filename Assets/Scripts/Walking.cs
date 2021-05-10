@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Walking : MonoBehaviour
 {
     Rigidbody2D rb;
     public Animator anim;
-    private BoxCollider2D boxCollider2d;
-
+    private BoxCollider2D col;
+    public bool isground;
+    
 
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        BoxCollider2d = GetComponent<Rigidbody2D>();
+        col = transform.GetComponent<BoxCollider2D>();
     }
 
 
@@ -22,7 +24,7 @@ public class Walking : MonoBehaviour
     void Update()
     {
         float xSpeed = 0.0f;
-
+        
 
         float jvol = 0.0f;
 
@@ -34,6 +36,7 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0f, 0);
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
+
         }
 
         if (Input.GetKey("a"))
@@ -48,15 +51,16 @@ public class Walking : MonoBehaviour
 
         }
 
-        if (isground() && Input.GetKey("w"))
+        if (Input.GetKey("w"))
         {
             jvol = 7.0f;
             rb.velocity = Vector2.up * jvol;
             anim.SetBool("isjump", true);
             anim.SetBool("iswalking", false);
             anim.SetBool("isidle", false);
-        }
 
+        }
+        
 
 
         if (xSpeed == 0.0f && jvol == 0.0)
@@ -79,14 +83,21 @@ public class Walking : MonoBehaviour
 
         }
 
-        private bool isground()
+
+        void OnTriggerEnter2D(Collider col)
         {
-
-        RaycastHit2d raycastHit2d = Physics2D.BoxCast(boxCollider2d.bounds.center, boxCollider2d.bounds.size, 0f, Vector2.down, 0.1f);
-        Debug.Log(raycastHit2d.collider);
-        return raycastHit2d.collider != null;
-
+            isground = true;
         }
+
+
+        void OnTriggerExit2D(Collider col)
+        {
+            isground = false;
+        }
+
     }
+
+
+
 
 }
