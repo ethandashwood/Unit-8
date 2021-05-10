@@ -16,6 +16,7 @@ public class Walking : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = transform.GetComponent<BoxCollider2D>();
+
     }
 
 
@@ -23,6 +24,7 @@ public class Walking : MonoBehaviour
 
     void Update()
     {
+
         float xSpeed = 0.0f;
         
 
@@ -36,7 +38,6 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0f, 0);
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
-
         }
 
         if (Input.GetKey("a"))
@@ -47,8 +48,6 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180f, 0);
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
-
-
         }
 
         if (Input.GetKey("w"))
@@ -59,14 +58,28 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", false);
             anim.SetBool("isidle", false);
 
+
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+            anim.SetBool("ispunch", true);
+
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("pazpunch") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
+            {
+                anim.SetBool("ispunch", false);
+                Debug.Log("punch anim finished");
+            }
+        }
 
 
         if (xSpeed == 0.0f && jvol == 0.0)
         {
             anim.SetBool("isidle", true);
             anim.SetBool("iswalking", false);
+
+
         }
 
         if (jvol == 0.0)
@@ -83,18 +96,19 @@ public class Walking : MonoBehaviour
 
         }
 
+            void OnCollisionStay(Collision coll)
+            {
+                isground = true;
 
-        void OnTriggerEnter2D(Collider col)
-        {
-            isground = true;
-        }
+            }
 
-
-        void OnTriggerExit2D(Collider col)
-        {
-            isground = false;
-        }
-
+            void OnCollisionExit(Collision coll)
+            {
+                if(isground)
+                {
+                    isground = false;
+                }
+            }
     }
 
 
