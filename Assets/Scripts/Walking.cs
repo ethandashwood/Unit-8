@@ -8,8 +8,9 @@ public class Walking : MonoBehaviour
     Rigidbody2D rb;
     public Animator anim;
     private BoxCollider2D col;
-    public bool isground;
-    
+
+
+    [SerializeField] private LayerMask platLayM;
 
     void Start()
     {
@@ -18,7 +19,6 @@ public class Walking : MonoBehaviour
         col = transform.GetComponent<BoxCollider2D>();
 
     }
-
 
 
 
@@ -38,7 +38,8 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0f, 0);
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
-        }
+            anim.SetBool("ispunch", false);
+    }
 
         if (Input.GetKey("a"))
         {
@@ -48,15 +49,17 @@ public class Walking : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180f, 0);
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
-        }
+            anim.SetBool("ispunch", false);
+    }
 
-        if (Input.GetKey("w"))
+        if (isGround() && Input.GetKey("w"))
         {
-            jvol = 7.0f;
+            jvol = 10.0f;
             rb.velocity = Vector2.up * jvol;
             anim.SetBool("isjump", true);
             anim.SetBool("iswalking", false);
             anim.SetBool("isidle", false);
+            anim.SetBool("ispunch", false);
 
 
         }
@@ -93,25 +96,32 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", false);
             anim.SetBool("isjump", true);
             anim.SetBool("isidle", false);
+            anim.SetBool("ispunch", false);
+
 
         }
 
-            void OnCollisionStay(Collision coll)
-            {
-                isground = true;
 
-            }
-
-            void OnCollisionExit(Collision coll)
-            {
-                if(isground)
-                {
-                    isground = false;
-                }
-            }
     }
 
+    private bool isGround()
+    {
+        float exHeightT = .1f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(col.bounds.center, Vector2.down, col.bounds.extents.y + exHeightT, platLayM);
+        Color rayColour;
 
+        if (raycastHit.collider != null)
+        {
+            rayColour = Color.green;
+        }
+        else
+        {
+            rayColour = Color.red;
+        }
+
+        Debug.DrawRay(col.bounds.center, Vector2.down * (col.bounds.extents.y + exHeightT));
+        return raycastHit.collider != null;
+    }
 
 
 }
