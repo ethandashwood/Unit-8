@@ -9,33 +9,40 @@ public class EnemyAI : MonoBehaviour
     public Transform target;
     public float activateDistance = 50f;
     public float pathUpdateSeconds = 0.5f;
+    public float attackDistance = 0.1f;
 
     [Header("Physics")]
-    public float speed = 200f;
+    public float speed = 400;
     public float nextWaypointDistance = 3f;
-    public float jumpNodeHeightRequirement = 0.8f;
+    public float jumpNodeHeightRequirement = 0.1f;
     public float jumpCheckOffset = 0.1f;
-    public float jumpModifier = 0.3f;
+    public float jumpModifier = 1f;
 
     [Header("Custom Behaviour")]
     public bool followEnabled = true;
     public bool jumpEnabled = true;
     public bool directionLookEnabled = true;
 
+
+    private Animator anim;
     private Path path;
     private int currentWaypoint = 0;
-    bool isGround = false;
+    RaycastHit2D isGround;
     Seeker seeker;
     Rigidbody2D rb;
+    private Vector3 prevloc;
 
-     
 
-    void Start()
+    public void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
+        anim = GetComponent<Animator>();
+
+
+        anim.SetBool("armwalk", true);
+
     }
 
 
@@ -67,6 +74,9 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
+
+        Vector3 startOffset = transform.position - new Vector3(0f, GetComponent<Collider2D>().bounds.extents.y + jumpCheckOffset);
+
         isGround = Physics2D.Raycast(transform.position, -Vector3.up, GetComponent<Collider2D>().bounds.extents.y + jumpCheckOffset);
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -93,15 +103,19 @@ public class EnemyAI : MonoBehaviour
 
         if (directionLookEnabled)
         {
-            if (rb.velocity.x > 0.05f)
+            Vector3 currentvelocity = (transform.position - prevloc) / Time.deltaTime;
+            if (currentvelocity.x > 0)
             {
-                transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                transform.rotation = Quaternion.Euler(0, -180, 0);
             }
-            else if (rb.velocity.x < -0.05f)
+            else
             {
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+            prevloc = transform.position;
         }
+
+
     }
 
     private bool TargetInDistance()
@@ -117,6 +131,12 @@ public class EnemyAI : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+    void Update()
+    {
+
+    }
+
+
 }
 
 

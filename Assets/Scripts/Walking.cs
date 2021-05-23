@@ -6,7 +6,7 @@ using UnityEngine;
 public class Walking : MonoBehaviour
 {
     Rigidbody2D rb;
-    public Animator anim;
+    private Animator anim;
     private BoxCollider2D col;
 
 
@@ -33,7 +33,7 @@ public class Walking : MonoBehaviour
         if (Input.GetKey("d"))
         {
 
-            xSpeed = 8.0f;
+            xSpeed = 13.0f;
             transform.position += new Vector3(xSpeed * Time.deltaTime, 0, 0);
             transform.rotation = Quaternion.Euler(0, 0f, 0);
             anim.SetBool("iswalking", true);
@@ -44,7 +44,7 @@ public class Walking : MonoBehaviour
         if (Input.GetKey("a"))
         {
 
-            xSpeed = -8.0f;
+            xSpeed = -13.0f;
             transform.position += new Vector3(xSpeed * Time.deltaTime, 0, 0);
             transform.rotation = Quaternion.Euler(0, 180f, 0);
             anim.SetBool("iswalking", true);
@@ -54,7 +54,7 @@ public class Walking : MonoBehaviour
 
         if (isGround() && Input.GetKey("w"))
         {
-            jvol = 10.0f;
+            jvol = 15.0f;
             rb.velocity = Vector2.up * jvol;
             anim.SetBool("isjump", true);
             anim.SetBool("iswalking", false);
