@@ -8,6 +8,10 @@ public class Walking : MonoBehaviour
     Rigidbody2D rb;
     private Animator anim;
     private BoxCollider2D col;
+    public static bool pblock;
+    private bool inRange;
+    public static float enHealth;
+    private int attackCount;
 
 
     [SerializeField] private LayerMask platLayM;
@@ -17,6 +21,9 @@ public class Walking : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = transform.GetComponent<BoxCollider2D>();
+        pblock = false;
+        enHealth = 100.0f;
+        attackCount = 0;
 
     }
 
@@ -50,7 +57,19 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
             anim.SetBool("ispunch", false);
-    }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            pblock = true;
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            pblock = false;
+
+        }
 
         if (isGround() && Input.GetKey("w"))
         {
@@ -64,16 +83,21 @@ public class Walking : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && inRange ==true && attackCount = 2)
         {
 
+            enHealth -= 5.0f;
+
             anim.SetBool("ispunch", true);
+
+            attackCount -= 1;
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("pazpunch") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
             {
                 anim.SetBool("ispunch", false);
                 Debug.Log("punch anim finished");
             }
+
         }
 
 
@@ -121,6 +145,13 @@ public class Walking : MonoBehaviour
 
         Debug.DrawRay(col.bounds.center, Vector2.down * (col.bounds.extents.y + exHeightT));
         return raycastHit.collider != null;
+    }
+
+    void OnTriggerEnter2D(Collider2D trig)
+    {
+        
+        inRange = true;
+
     }
 
 

@@ -23,7 +23,6 @@ public class playerDeath : MonoBehaviour
         {
             Destroy(GameObject.FindWithTag("Player"));
 
-            levmanage.instance.Respawn();
 
         }
 

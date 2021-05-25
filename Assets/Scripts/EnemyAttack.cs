@@ -28,10 +28,14 @@ public class EnemyAttack : MonoBehaviour
 
     void Update()
     {
-        if (inRange)
+        if (inRange && Walking.pblock == false)
         {
             hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
             RaycastDebugger();
+
+            pHealthBar.playerHealth -= 10.0f;
+
+
         }
 
         if (hit.collider != null)
@@ -48,6 +52,12 @@ public class EnemyAttack : MonoBehaviour
             StopAttack();
         }
 
+
+        if (Walking.enHealth == 0.0f)
+        {
+            Destroy(GameObject.FindWithTag("Enemy"));
+
+        }
     }
 
     void Attack()
