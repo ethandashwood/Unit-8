@@ -9,9 +9,8 @@ public class Walking : MonoBehaviour
     private Animator anim;
     private BoxCollider2D col;
     public static bool pblock;
-    private bool inRange;
-    public static float enHealth;
-    private int attackCount;
+    public static bool inRange;
+    public static float enhealth;
 
 
     [SerializeField] private LayerMask platLayM;
@@ -22,8 +21,8 @@ public class Walking : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = transform.GetComponent<BoxCollider2D>();
         pblock = false;
-        enHealth = 100.0f;
-        attackCount = 0;
+        inRange = false;
+        enhealth = 100.0f;
 
     }
 
@@ -46,7 +45,8 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
             anim.SetBool("ispunch", false);
-    }
+
+        }
 
         if (Input.GetKey("a"))
         {
@@ -57,7 +57,10 @@ public class Walking : MonoBehaviour
             anim.SetBool("iswalking", true);
             anim.SetBool("isidle", false);
             anim.SetBool("ispunch", false);
+
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -80,17 +83,16 @@ public class Walking : MonoBehaviour
             anim.SetBool("isidle", false);
             anim.SetBool("ispunch", false);
 
-
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && inRange ==true && attackCount = 2)
+        if (Input.GetKeyDown(KeyCode.E) && inRange ==true && pblock == false)
         {
 
-            enHealth -= 5.0f;
+            enhealth -= 2.8f;
+
 
             anim.SetBool("ispunch", true);
 
-            attackCount -= 1;
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("pazpunch") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
             {
@@ -98,6 +100,12 @@ public class Walking : MonoBehaviour
                 Debug.Log("punch anim finished");
             }
 
+        }
+
+        if (enhealth == 0f)
+        {
+            Destroy(GameObject.FindWithTag("Player"));
+            Destroy(GameObject.FindWithTag("Enemy"));
         }
 
 
@@ -149,8 +157,9 @@ public class Walking : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D trig)
     {
-        
+
         inRange = true;
+
 
     }
 

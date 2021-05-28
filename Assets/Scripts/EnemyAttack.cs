@@ -53,11 +53,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
 
-        if (Walking.enHealth == 0.0f)
-        {
-            Destroy(GameObject.FindWithTag("Enemy"));
 
-        }
     }
 
     void Attack()

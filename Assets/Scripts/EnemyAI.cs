@@ -7,12 +7,12 @@ public class EnemyAI : MonoBehaviour
 {
     [Header("Pathfinding")]
     public Transform target;
-    public float activateDistance = 50f;
+    public float activateDistance = 2f;
     public float pathUpdateSeconds = 0.5f;
     public float attackDistance = 0.1f;
 
     [Header("Physics")]
-    public float speed = 400;
+    public float speed = 4000;
     public float nextWaypointDistance = 3f;
     public float jumpNodeHeightRequirement = 0.1f;
     public float jumpCheckOffset = 0.1f;

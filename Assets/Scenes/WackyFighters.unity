@@ -1041,7 +1041,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5342e647aa030142926a34638940d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  losingscreen: {fileID: 3581827897405018242, guid: 2951f9d116b1659428756551da10d8c4, type: 3}
 --- !u!1001 &1003655781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1730,7 +1729,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyhealth: 0
-  winscreen: {fileID: 3530406785706350083, guid: e87df327b18070e48a38af8e55989119, type: 3}
 --- !u!212 &1487302929
 SpriteRenderer:
   m_ObjectHideFlags: 0

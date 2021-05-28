@@ -7,6 +7,7 @@ public class pHealthBar : MonoBehaviour
 {
 
     public static float playerHealth;
+    public Transform losingscreen;
 
 
     void Start()
@@ -91,6 +92,8 @@ public class pHealthBar : MonoBehaviour
             bar.localScale = new Vector2(.0001f, 0.05566879f);
 
             Destroy(GameObject.FindWithTag("Player"));
+
+            Instantiate(losingscreen);
 
         }
         

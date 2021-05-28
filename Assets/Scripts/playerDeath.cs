@@ -21,7 +21,9 @@ public class playerDeath : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(GameObject.FindWithTag("Player"));
+            pHealthBar.playerHealth = 0f;
+
+
 
 
         }
