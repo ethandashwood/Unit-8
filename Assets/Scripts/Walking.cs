@@ -88,7 +88,7 @@ public class Walking : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && inRange ==true && pblock == false)
         {
 
-            enhealth -= 2.8f;
+            enhealth -= 2f;
 
 
             anim.SetBool("ispunch", true);

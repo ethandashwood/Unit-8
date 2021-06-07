@@ -323,7 +323,7 @@ MonoBehaviour:
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
     cacheStartup: 0
-  showNavGraphs: 1
+  showNavGraphs: 0
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0
@@ -1608,7 +1608,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439562049}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.29, z: 0}
+  m_LocalPosition: {x: 0.062, y: 0.308, z: 0}
   m_LocalScale: {x: -0.28, y: 0.28, z: 0}
   m_Children: []
   m_Father: {fileID: 1126099646}
